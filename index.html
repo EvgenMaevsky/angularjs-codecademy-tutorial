@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gemStore">
+<head>
+	<meta charset="UTF-8">
+	<title>Angular Js Tutorial</title>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<style>
+		body{
+			background: #fff;
+		}
+		.product{
+			display: inline-block;
+			height: auto;
+			border: 2px solid black;
+			border-radius: 5px;
+			background: #fff;
+			line-height: 50px;
+    		box-shadow: 0px 4px 5px 2px #666;
+    				}
+    	.img-thumbnails{
+    		display: -webkit-flex;
+    		display: -moz-flex;
+    		display: -ms-flex;
+    		display: -o-flex;
+    		display: flex;
+    		-webkit-flex-direction: row;
+    		-moz-flex-direction: row;
+    		-ms-flex-direction: row;
+    		-o-flex-direction: row;
+    		flex-direction: row;
+    		justify-content: space-between;
+    	}
+    	li > img{
+    		width: 33%;
+    	}
+	</style>
+</head>
+ <body ng-controller='StoreController as store'>
+ <div class="row">
+ 	<div class="product col-md-4 col-md-offset-4" ng-repeat="product in store.products">
+      <h3>
+        {{product.name}}
+        <em class="pull-right">{{product.price | currency}}</em>
+        </h3>
+        <!-- Image Gallery  -->
+      <div class='gallery' ng-show="product.images.length" ng-controller="GalleryController as gallery">
+        <img ng-src="{{product.images[gallery.current]}}" />
+        <ul class="list-inline thumbs">
+          <li class="thumbnail" ng-repeat="image in product.images">
+            <img ng-src="{{image}}" />
+          </li>
+        </ul>
+      </div>        
+        
+      <section class="tab" ng-controller="TabController as tabs">
+        <ul class="nav nav-pills">
+          <li ng-class="{active:tabs.isSet(1)}">
+            <a href ng-click="tabs.setTab(1)">Description</a></li>
+          <li ng-class="{active:tabs.isSet(2)}">
+            <a href  ng-click="tabs.setTab(2)">Specs</a></li>
+          <li ng-class="{active:tabs.isSet(3)}">
+            <a href  ng-click="tabs.setTab(3)">Reviews</a></li>
+        </ul>
+        <div ng-show="tabs.isSet(1)">
+          <h4>Description</h4>
+          <blockquote>{{product.description}}</blockquote>
+        </div>
+        <div ng-show="tabs.isSet(2)">
+          <h4>Specs</h4>
+          <blockquote>Shine: {{product.shine}}</blockquote>
+        </div>
+        <div ng-show="tabs.isSet(3)">
+          <h4>Reviews</h4>
+          <blockquote></blockquote>
+        </div>
+      </section>
+    </div>
+ </div>
+    
+    <script src="./node_modules/angular/angular.min.js"></script>
+	<script src="app.js"></script>
+  </body>
+</html>
